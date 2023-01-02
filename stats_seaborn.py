@@ -17,17 +17,17 @@ start_date = "2020-06"
 end_date = date.today()
 end_date_input_format = end_date.strftime("%d-%m-%y")
 end_date_output_format = end_date.strftime("%Y-%m")
-data_columns = ["weight", "ave", "sp"]
+data_columns = ["weight"]
+sbn.set(rc={"figure.figsize": (20, 6)})
 
 
 DATA_FILE = "data.csv"
 
 
 def load_data():
-    sbn.set(rc={"figure.figsize": (20, 6)})
 
     daily_data = pd.read_csv(
-        DATA_FILE, usecols=[0, 1, 2, 3], index_col=0, parse_dates=True
+        DATA_FILE, usecols=[0, 1, 2], index_col=0, parse_dates=True
     )
 
     monthly_mean = daily_data[data_columns].resample("M").mean(numeric_only=True)
@@ -35,7 +35,7 @@ def load_data():
     return daily_data, monthly_mean
 
 
-def append_currrent_day():
+def append_current_day():
 
     with open(DATA_FILE, "r+") as f_object:
         final_line = f_object.readlines()[-1]
@@ -43,7 +43,9 @@ def append_currrent_day():
         if not end_date_input_format in final_line:
             # Pass this file object to csv.writer()
             # and get a writer object
-            today_data = (end_date_input_format, "", "", "")
+            weight=""
+            sp=""
+            today_data = (end_date_input_format, weight, sp)
             writer_object = writer(f_object)
             writer_object.writerow(today_data)
 
@@ -90,7 +92,7 @@ def plot_data(daily_data, monthly_mean):
 
 
 def main():
-    append_currrent_day()
+    append_current_day()
     daily_data, monthly_mean = load_data()
     plot_data(daily_data, monthly_mean)
 

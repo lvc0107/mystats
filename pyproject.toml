@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "mystats"
+version = "0.1.0"
+description = ""
+authors = ["Migue Vargas <lvc0107@proton.me>"]
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+seaborn = "^0.12.2"
+spyder-kernels = "^2.4.1"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^2.21.0"
+pytest = "^7.2.0"
+behave = "^1.2.6"
+black = "^21.8b0"
+flake8 = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

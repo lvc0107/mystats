@@ -1,0 +1,53 @@
+default_stages: [commit]
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: debug-statements
+      - id: mixed-line-ending
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.32.1
+    hooks:
+      - id: pyupgrade
+        args: [--py36-plus]
+        exclude: ^install-local.py$
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args: [ "--profile", "black", "--filter-files", "--ca"]
+  - repo: git@github.com:humitos/mirrors-autoflake.git
+    rev: v1.1
+    hooks:
+      - id: autoflake
+        args:
+          [
+              "--in-place",
+              "--remove-all-unused-imports",
+              "--remove-unused-variables",
+          ]
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - 'flake8-comprehensions'
+          - 'flake8-simplify'
+  - repo: https://github.com/ducminh-phan/reformat-gherkin
+    rev: v2.2.1
+    hooks:
+      - id: reformat-gherkin
+  - repo: https://github.com/alanRizzo/pre-commit-message
+    rev: v.0.0.1
+    hooks:
+      - id: commit-message
+        stages: [commit-msg]
+        args:
+          - --commit-regex=^STATS-[0-9]+
